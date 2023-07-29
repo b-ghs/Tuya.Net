@@ -9,8 +9,57 @@ namespace Tuya.Net.Security
     /// <summary>
     /// Encryption utils class.
     /// </summary>
-    internal static class EncryptionUtils
+    public static class EncryptionUtils
     {
+        /// <summary>
+        /// Decrypt AES-128-CBC encrypted data without IV
+        /// </summary>
+        /// <param name="accessToken">The access token.</param>
+        /// <param name="passwordTicket">Password ticket</param>
+        /// 
+        public static string DecryptAES128(string encryptionKey, string data)
+        {
+            
+            var key = Encoding.UTF8.GetBytes(encryptionKey);
+            
+            var iv = new byte[16];
+            var encrypted = ConvertHexStringToByteArray(data);
+            var aes = Aes.Create();
+            aes.Mode = CipherMode.ECB;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = 128;
+            aes.Key = key;
+            aes.IV = iv;
+            var decryptor = aes.CreateDecryptor();
+            var decrypted = decryptor.TransformFinalBlock(encrypted, 0, encrypted.Length);
+            return Encoding.UTF8.GetString(decrypted);
+        }
+
+        public static string EncryptAES128(string encryptionKey, string data)
+        {
+            var key = Encoding.UTF8.GetBytes(encryptionKey);
+            var iv = new byte[16];
+            var dataWA = Encoding.UTF8.GetBytes(data);
+            var aes = Aes.Create();
+            aes.Mode = CipherMode.ECB;
+            aes.Padding = PaddingMode.PKCS7;
+            aes.KeySize = 128;
+            aes.Key = key;
+            aes.IV = iv;
+            var encryptor = aes.CreateEncryptor();
+            var encrypted = encryptor.TransformFinalBlock(dataWA, 0, dataWA.Length);
+            var encryptedHex = BitConverter.ToString(encrypted).Replace("-", "");
+            return encryptedHex;
+        }   
+
+        private static byte[] ConvertHexStringToByteArray(string hex)
+        {
+            return Enumerable.Range(0, hex.Length)
+                .Where(x => x % 2 == 0)
+                .Select(x => Convert.ToByte(hex.Substring(x, 2), 16))
+                .ToArray();
+        }
+
         /// <summary>
         /// Calculate the signature of the Tuya API request.
         /// </summary>

@@ -21,6 +21,9 @@ namespace Tuya.Net
         /// <inheritdoc />
         public IUserManager UserManager { get; }
 
+        /// <inheritdoc />
+        public ISmartLockManager SmartLockManager { get; }
+
         /// <summary>
         /// Initializes a new instance of <see cref="TuyaClient"/> class.
         /// </summary>
@@ -46,6 +49,7 @@ namespace Tuya.Net
             this.logger = logger;
             LowLevel = new TuyaApiClient(baseUrl, credentials, logger);
             DeviceManager = new DeviceManager(this, logger);
+            SmartLockManager = new SmartLockManager(this, logger);
             UserManager = new UserManager(this, logger);
         }
 

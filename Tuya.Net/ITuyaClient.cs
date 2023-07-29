@@ -25,6 +25,11 @@ namespace Tuya.Net
         public IUserManager UserManager { get; }
 
         /// <summary>
+        /// Get the smart lock manager.
+        /// </summary>
+        public ISmartLockManager SmartLockManager { get; }
+
+        /// <summary>
         /// Make authenticated requests.
         /// </summary>
         /// <typeparam name="T">Object type to return.</typeparam>
