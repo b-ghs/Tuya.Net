@@ -10,6 +10,6 @@ namespace Tuya.Net.Data
     public class TemporaryPassword
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
-        public long? Id { get; set; }
+        public string? Id { get; set; }
     }
 }
