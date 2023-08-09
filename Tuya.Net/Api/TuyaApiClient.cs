@@ -114,6 +114,8 @@ namespace Tuya.Net.Api
 
                 if ((bool)!deserializedResponse.IsSuccess)
                 {
+                    //Log response json
+
                     throw new TuyaResponseException(deserializedResponse.ErrorCode!, deserializedResponse.ErrorMessage!);
                 }
 
