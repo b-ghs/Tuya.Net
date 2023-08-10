@@ -18,6 +18,18 @@ namespace Tuya.Net.IoT
         public Task<TemporaryPassword?> CreateTemporaryPasswordAsync(CreateTemporaryPasswordRequest createTemporaryPasswordRequest, CancellationToken ct = default);
 
         /// <summary>
+        /// Get Temporary Password using params
+        /// </summary>
+        /// <param name="deviceId"></param>
+        /// <param name="pin"></param>
+        /// <param name="name"></param>
+        /// <param name="startTime"></param>
+        /// <param name="endTime"></param>
+        /// <param name="ct"></param>
+        /// <returns></returns>
+        public Task<TemporaryPassword?> CreateTemporaryPasswordAsync(string deviceId, string pin, string name, long startTime, long endTime, CancellationToken ct = default);
+
+        /// <summary>
         /// Get a temporary key for password encryption
         /// </summary>
         /// <param name="deviceId">Tuya device ID.</param>
